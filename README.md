@@ -5,8 +5,8 @@
  
  <b>Usage:-</b><br>
  ```bash
- ./run.sh 12.12.12.12 ( Target Device ip )
- ./run.sh ( Exploit Locally Usb connected device )
+bash run.sh 12.12.12.12 ( Target Device ip )
+bash run.sh ( Exploit Locally Usb connected device )
  ```
  <br/>
  <h4 align="center">
