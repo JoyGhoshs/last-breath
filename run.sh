@@ -125,7 +125,7 @@ function connection(){
 }
 function main_panel(){
     
-    read -p "last_breath$> " command
+    read -p "last_breath[$1]$> " command
     command_panel $command 
     main_panel $1
 }
@@ -156,13 +156,13 @@ function command_panel(){
     battery_level=$(adb shell dumpsys battery | grep level | sed 's/level: //')
     echo -e "\n\e[32m-\e[0m \033[1m$battery_level%\033[0m\n"
     ;;
-    "set_battery")
+    "set-battery")
     set_battery_level $2
     ;;
-    "reset_battery")
+    "reset-battery")
     reset_battery
     ;;
-    "set_usb")
+    "set-usb")
     set_usb_status $2
     ;;
     "screen-on")
