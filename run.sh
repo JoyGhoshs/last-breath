@@ -1,3 +1,4 @@
+#!/bin/bash
 function adb_Server(){
     echo -e "\e[32m[+]\e[0m \033[1mStoping ADB server\033[0m"
     adb kill-server &>/dev/null
