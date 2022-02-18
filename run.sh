@@ -1,4 +1,3 @@
-#!/bin/bash
 function adb_Server(){
     echo -e "\e[32m[+]\e[0m \033[1mStoping ADB server\033[0m"
     adb kill-server &>/dev/null
@@ -45,7 +44,11 @@ scrcpy               live screen mirroring
 input                input text (Ex: input 'hi')
 call                 call number (Example: call +923331234567)
 send-sms             send sms (Example: send-sms +1234567 'hi)
-youtube-play         play video from youtube (Example: youtube-play https://www.youtube.com/watch?v=dQw4w9WgXcQ)    
+youtube-play         play video from youtube (Example: youtube-play https://www.youtube.com/watch?v=dQw4w9WgXcQ) 
+dump-contacts        dump contacts (Example: dump-contact)  
+wifi-on              turn on wifi
+wifi-off             turn off wifi
+imei                 show imei
 """
 }
 function device_info(){
@@ -232,8 +235,26 @@ function command_panel(){
     echo -e "\n\e[32m[+]\e[0m \033[1mPlaying Youtube Video\033[0m\n"
     adb shell am start -a android.intent.action.VIEW -d $2 &> /dev/null
     ;;
+    "dump-contacts")
+    echo -e "\n\e[32m[+]\e[0m \033[1mDumping Contacts\033[0m\n"
+    adb shell content query --uri content://com.android.contacts/contacts > contacts.txt
+    echo -e "\e[32m[+]\e[0m \033[1mSaving Contacts as contacts.txt\033[0m\n"
+    ;;
+    "wifi-on")
+    echo -e "\n\e[32m[+]\e[0m \033[1mTurning Wifi On\033[0m\n"
+    adb shell svc wifi enable &> /dev/null
+    ;;
+    "wifi-off")
+    echo -e "\n\e[32m[+]\e[0m \033[1mTurning Wifi Off\033[0m\n"
+    adb shell svc wifi disable &> /dev/null
+    ;;
+    "imei")
+    echo -e "\n\e[32m[+]\e[0m \033[1mGetting IMEI\033[0m\n"
+    imei=$(adb shell service call iphonesubinfo 1 | awk -F "'" '{print $2}' | sed '1 d' | tr -d '.' | awk '{print}' ORS=)
+    echo -e "\e[32m- \e[0m \033[1m$imei\033[0m\n"
+    ;;
     *)
-    echo -e "\n\e[31m[X]\e[0m \033[1mCommand Not Found\033[0m\n"
+    echo -e "\n\e[31m[X]\e[0m \033[1m$1 Command Not Found\033[0m\n"
     ;;
     esac
 }
